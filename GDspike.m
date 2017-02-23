@@ -1,15 +1,15 @@
-function [ grp_delay , signal] = GDspike( FOUT,sampling_rate, smoothening_factor, winScaleFactor, thres )
+function [ grp_delay , signal] = GDspike( calcium_trace,sampling_rate, smoothening_factor, winScale_factor, thres )
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %GDSPIKE Algorithm: Estimates the spike positions from a calcium fluorescence signal
-% Author : Jilt Sebastian & Mari Ganesh Kumar
-% Last Updated on: Feb 21, 2017
+%Author : Jilt Sebastian & Mari Ganesh Kumar
+%Last Updated on: Feb 23, 2017
 %
 % INPUT Arguments:
-% FOUT : Calcium fluorescence signal
-% sampling rate : Sampling rate of calcium signal
-% smoothening factor : For moving average preprocessing: Default valueis 1  (no smoothing)
-% winScaleFactor : Parameter to select the length of root cepstral signal on which group delay is computed
+% calcium_trace : Calcium fluorescence signal
+% sampling_rate : Sampling rate of calcium signal
+% smoothening_factor : For moving average preprocessing: Default valueis 1  (no smoothing)
+% winScale_factor : Parameter to select the length of root cepstral signal on which group delay is computed
 % thres: Threshold for spike train estimation from the spiking information
 % 
 % 
@@ -23,16 +23,16 @@ function [ grp_delay , signal] = GDspike( FOUT,sampling_rate, smoothening_factor
 %This work is accepted for poster presentation  at ICASSP 2017, New%Orleans, USA
 %"GDspike: An Accurate Spike Estimation Algorithm from Noisy Calcium Fluorescence Signals" 
 %by Jilt Sebastian , Mari Ganesh Kumar , Y. S.Sreekar and Hema A. Murthy from IIT Madras India and  Rajeev Vijay Rikhye
-%and Mriganka Sur from Suur Lab, MIT, USA
+%and Mriganka Sur from Sur Lab, MIT, USA
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-   % winScaleFactor = 5:5:45;
+   % winScale_factor = 5:5:45;
    
                     %Part1: Calculating the GD signal
-                    S = smooth(FOUT,smoothening_factor,'moving');%MA smoothing-preprocessing
+                    S = smooth(calcium_trace,smoothening_factor,'moving');%MA smoothing-preprocessing
                     grp_delay = ones(length(S),1);
                     gd_sum = ones(length(S),1);
 
-                    for wsfIndex = 1:length(winScaleFactor)
+                    for wsfIndex = 1:length(winScale_factor)
                         tempDir = sprintf('temp_%d',wsfIndex);
                         warning('off','all')
                         mkdir(tempDir); cd(tempDir);
@@ -49,7 +49,7 @@ function [ grp_delay , signal] = GDspike( FOUT,sampling_rate, smoothening_factor
                         % Changing the winscalefactor parameter in config file
                         a = importdata(ctrl_file);
                         a = struct2cell(a);
-                        a{1}(3) = winScaleFactor(wsfIndex);
+                        a{1}(3) = winScale_factor(wsfIndex);
                         fid0 = fopen(temp_ctrl_file,'w');
                         for i = 1:length(a{1})
                             fprintf(fid0,'%s %s %f\n',char(a{2}(i,1)),char(a{2}(i,2)),a{1}(i));
@@ -61,8 +61,8 @@ function [ grp_delay , signal] = GDspike( FOUT,sampling_rate, smoothening_factor
                         dummy3 = 'd';
                         dummy4 = 'e';
                         dump = 'dump.txt';
-                       %Invoking the binary file WordSegmentsWithSilenceRemoval --see the source file  WordSegmentsWithSilenceRemoval.c
-                       %Input-fluorescence signal Output-GD representation
+                       	%Invoking the binary file WordSegmentsWithSilenceRemoval --see the source file  WordSegmentsWithSilenceRemoval.c
+                       	%Input-fluorescence signal Output-GD representation
                         system(sprintf('../WordSegmentWithSilenceRemoval %s %s %s %s %s %s %s > %s 2>&1',ctrl_file,energy_file_name,spec_file_name,dummy1,dummy2,dummy3,dummy4,dump));
                           
                         delete(energy_file_name);
@@ -166,7 +166,7 @@ function [ grp_delay , signal] = GDspike( FOUT,sampling_rate, smoothening_factor
                     % Part 3: Traingulation Step
                     %======================================================================
 
-                    X=FOUT;
+                    X=calcium_trace;
                     Fs=sampling_rate;
                     time=length(S)/Fs;% Converting into seconds
                     isort = sort([imax imin]);
