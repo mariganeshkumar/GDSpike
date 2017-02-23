@@ -4,13 +4,12 @@ Accurate estimation of spike train from calcium (Ca 2+ ) fluorescence signals is
 
 ### What is this repository for? ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* This repo has the MATLAB implementation of GDSPIKE Algorithm.
+* Version 0.0
 
 ### How do I get set up? ###
 
-* Summary of set up
+* Clone the repository with **"git clone https://mariganeshkumar@bitbucket.org/mariganeshkumar/gdspike.git"**
 * Configuration
 * Dependencies
 * Database configuration
