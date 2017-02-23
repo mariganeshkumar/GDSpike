@@ -12,8 +12,8 @@ Accurate estimation of spike train from calcium (Ca 2+ ) fluorescence signals is
 ### What are the inputs needed for GDspike.m? ###
 You need to give the following two arguments, in order
 * Calcium fluorescence signal - 1D time series.
-* sampling_rate - Sampling rate of calcium signal.
-.
+* Sampling_rate - Sampling rate of calcium signal.
+
 ### Whom to contact? ###
 
 * Write to jilt18 [at] gmail.com for any clarifications.
