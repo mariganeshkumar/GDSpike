@@ -10,19 +10,10 @@ Accurate estimation of spike train from calcium (Ca 2+ ) fluorescence signals is
 ### How do I get set up? ###
 
 * Clone the repository with **"git clone https://mariganeshkumar@bitbucket.org/mariganeshkumar/gdspike.git"**
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+* Use the function GDspike.m to estimate the spike train from GCamp fluorescence traces.
 
-### Contribution guidelines ###
 
-* Writing tests
-* Code review
-* Other guidelines
 
 ### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+* Write to jilt18 [at] gmail.com for any clarifications.
